@@ -1,0 +1,75 @@
+
+<!doctype html>
+<html>
+
+    <head>
+        <title>My experiment</title>
+        <!-- Load jQuery -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet" type="text/css"></link>
+        <!-- Load the jspsych library and plugins -->
+        <script src="scripts/jspsych.js"></script>	
+        <script src="scripts/plugins/jspsych-text.js"></script>
+        <script src="scripts/plugins/jspsych-similarity.js"></script>
+        <!-- Load the stylesheet -->
+        <link href="experiment.css" type="text/css" rel="stylesheet"></link>
+    </head>
+
+    <body>
+        <div id="jspsych_target"></div>
+    </body>
+
+    <script>
+
+	
+        // Experiment Instructions
+        var welcome_message = "<div id='instructions'><p>Welcome to the " +
+            "experiment. Press enter to begin.</p></div>";
+
+        var instructions = "<div id='instructions'><p>You will see a " +
+            "series of images that look similar to this:</p><p>" +
+            "<img src='img/incongruent_right.gif'></p><p>Press the arrow " +
+            "key that corresponds to the direction that the middle arrow " +
+            "is pointing. For example, in this case you would press the " +
+            "right arrow key.</p><p>Press enter to start.</p>";
+
+	var hello = "<div id='instructions'><p>Have a cookie " +
+	    "and start the task.</p></div>";
+
+        var debrief = "<div id='instructions'><p>Thank you for " +
+            "participating!</p></div>";
+
+	// Simuli memory_test
+	var memory_test_stims = [["img/o_a_01B.jpg", "img/o_a_01B.jpg"],["img/o_a_02A.jpg", "img/o_a_07B.jpg"], ["img/o_a_08A.jpg","img/o_a_08A.jpg"]];
+
+        
+        // Define experiment blocks
+	
+        var instruction_block = {
+                type: "text",
+                text: [welcome_message, instructions]                
+            };
+        
+        var memory_test = {
+                type: "similarity",
+                stimuli: memory_test_stims,                 
+		prompt: "<p>Same or different?</p>",         
+            };
+
+        var debrief_block = {
+                type: "text",
+                text: [debrief]
+            };
+
+
+        jsPsych.init({
+  experiment_structure: [instruction_block, memory_test, debrief_block],
+  on_finish: function(data) {
+    jsPsych.dataAPI.displayData();
+	}
+    });
+     
+
+    </script>
+</html>
